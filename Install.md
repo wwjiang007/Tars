@@ -8,7 +8,7 @@
 
 如要用于线上环境，部署安装的原理是一样，不过需要更多考虑分布式系统下服务的部署需要有容错、容灾等的能力。若有需要，可以加入tars的qq技术交流群：579079160。
 
-# 1.依赖环境 <a id="chapter-1"></a>
+# 1. <a id="chapter-1"></a>依赖环境
 
 软件 |软件要求
 ------|--------
@@ -184,7 +184,7 @@ show slave status\G;
 ```
 **注意${备机Ip}需要修改成备机数据库的Ip**
 
-# 2. Tars开发环境安装介绍 <a id="chapter-2"></a>
+# 2. <a id="chapter-2"></a>Tars开发环境安装介绍
 ## 2.1. web管理系统开发环境安装
 以linux环境为例：
 
@@ -300,7 +300,7 @@ cd {$source_folder}/cpp/build
 **需要修改servant/script/create_tars_server.sh文件中的DEMO_PATH的路径**
 ```
 
-# 3. Tars数据库环境初始化 <a id="chapter-3"></a>
+# 3. <a id="chapter-3"></a>Tars数据库环境初始化
 ## 3.1. 添加用户
 ```sql
 grant all on *.* to 'tars'@'%' identified by 'tars2015' with grant option;
@@ -316,7 +316,7 @@ sql脚本在cpp/framework/sql目录下，修改部署的ip信息
 sed -i "s/192.168.2.131/${your machine ip}/g" `grep 192.168.2.131 -rl ./*`
 sed -i "s/db.tars.com/${your machine ip}/g" `grep db.tars.com -rl ./*`
 ```
-**注意，192.168.2.131这个ip是tars开发团队当时部署服务测试的ip信息，替换成自己数据库的部署地址即可**
+**注意，192.168.2.131这个ip是tars开发团队当时部署服务测试的ip信息，替换成自己数据库的部署地址即可,不要是127.0.0.1**
 
 **注意，db.tars.com是tars框架数据库部署的地址信息，替换成自己数据库的部署地址即可**
 
@@ -337,7 +337,7 @@ tars_stat是服务监控数据存储的数据库；
 
 tars_property是服务属性监控数据存储的数据库；
 
-# 4. Tars框架运行环境搭建 <a id="chapter-4"></a>
+# 4. <a id="chapter-4"></a>Tars框架运行环境搭建
 
 ## 4.1. 框架基础服务打包
 
@@ -397,12 +397,15 @@ cd /usr/local/app/tars
 sed -i "s/192.168.2.131/${your_machine_ip}/g" `grep 192.168.2.131 -rl ./*`
 sed -i "s/db.tars.com/${your_machine_ip}/g" `grep db.tars.com -rl ./*`
 sed -i "s/registry.tars.com/${your_machine_ip}/g" `grep registry.tars.com -rl ./*`
+sed -i "s/web.tars.com/${your_machine_ip}/g" `grep web.tars.com -rl ./*`
 ```
-**注意，192.168.2.131这个ip是tars开发团队当时部署服务测试的ip信息，替换成自己数据库的部署地址即可**
+**注意，192.168.2.131这个ip是tars开发团队当时部署服务测试的ip信息，替换成自己数据库的部署地址即可，不要是127.0.0.1**
 
 **注意，db.tars.com是tars框架数据库部署的地址信息，替换成自己数据库的部署地址即可**
 
 **注意，registry.tars.com是tars框架主控tarsregistry服务部署的地址信息，替换成自己主控tarsregistry符的部署地址即可**
+
+**注意，web.tars.com是rsync使用的地址信息，替换成自己的部署机器地址即可**
 
 然后在/usr/local/app/tars/目录下，执行脚本，启动tars框架服务
 ```
@@ -415,6 +418,7 @@ tars_install.sh
 ```
 tarspatch/util/init.sh
 ```
+**注意，上面脚本执行后，看看rsync进程是否起来了，若没有看看rsync使用的配置中的ip是否正确（即把web.tars.com替换成本机ip）
 
 在管理平台上面配置tarspatch，注意需要配置服务的可执行目录(/usr/local/app/tars/tarspatch/bin/tarspatch)
 
@@ -453,12 +457,15 @@ cd /usr/local/app/tars
 sed -i "s/192.168.2.131/${your_machine_ip}/g" `grep 192.168.2.131 -rl ./*`
 sed -i "s/db.tars.com/${your_machine_ip}/g" `grep db.tars.com -rl ./*`
 sed -i "s/registry.tars.com/${your_machine_ip}/g" `grep registry.tars.com -rl ./*`
+sed -i "s/web.tars.com/${your_machine_ip}/g" `grep web.tars.com -rl ./*`
 ```
-**注意，192.168.2.131这个ip是tars开发团队当时部署服务测试的ip信息，替换成自己数据库的部署地址即可**
+**注意，192.168.2.131这个ip是tars开发团队当时部署服务测试的ip信息，替换成自己数据库的部署地址即可，不要是127.0.0.1**
 
 **注意，db.tars.com是tars框架数据库部署的地址信息，替换成自己数据库的部署地址即可**
 
 **注意，registry.tars.com是tars框架主控tarsregistry服务部署的地址信息，替换成自己主控tarsregistry符的部署地址即可**
+
+**注意，web.tars.com是rsync使用的地址信息，替换成自己的部署机器地址即可**
 
 然后在/usr/local/app/tars/目录下，执行脚本，启动tars框架服务
 ```
