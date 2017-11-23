@@ -1,11 +1,12 @@
+#include "./include/tup_c.h"
+#include "./include/tars_c.h"
+
 #include "php.h"
 #include "php_ini.h"
 #include "Zend/zend_interfaces.h"
 #include "ext/standard/info.h"
 #include "./include/php_tupapi.h"
 #include "./include/ttars.h"
-#include "./include/tup_c.h"
-#include "./include/tars_c.h"
 
 Int32 TUP_putBool(void * pack, const char * name, Bool value)
 {
@@ -834,7 +835,7 @@ Int32 Unipacket_getCode(UniPacket* unpack,JString *tmp) {
 	return ret;
 }
 
-Int32 Unipacket_getMsg(UniPacket* unpack,JString *tmp) {
+Int32 Unipacket_getMsg(UniPacket* unpack,JString **tmp) {
 
 	Int32 ret = 0;
 	char * pBuff = NULL;
@@ -860,7 +861,7 @@ Int32 Unipacket_getMsg(UniPacket* unpack,JString *tmp) {
 	TarsInputStream_setBuffer(is_string, pBuff, len);
 
 
-	ret = TarsInputStream_readString(is_string, tmp, 1, true);
+	ret = TarsInputStream_readString(is_string, *tmp, 1, true);
 
 	if (TARS_SUCCESS != ret)	goto do_clean;
 
